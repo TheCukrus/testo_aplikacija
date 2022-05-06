@@ -40,6 +40,7 @@ router_questions.post("/", async (req, res) =>
                 "text": req.body.text,
                 "type": req.body.type,
                 "answers": req.body.answers
+
             });
 
         if (result1 === null)
@@ -55,6 +56,23 @@ router_questions.post("/", async (req, res) =>
     catch (err)
     {
         res.statusCode = 400;
+        res.end();
+    }
+})
+
+
+router_questions.get("/", async (req, res) =>
+{
+    try
+    {
+        const result1 = await model_questions.find({})
+
+        res.statusCode = 200;
+        res.end();
+    }
+    catch (err)
+    {
+        res.statusCode = 404;
         res.end();
     }
 })

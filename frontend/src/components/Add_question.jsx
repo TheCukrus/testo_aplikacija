@@ -26,12 +26,25 @@ const Add_question = () =>
                 "answers": [
                     {
                         "answer": ref_answer.current.value,
-                        "correct": ref_correct.current.value
+                        "correct": get_correct_value()
                     }]
             }
         })
     }
 
+    const get_correct_value = () =>
+    {
+        console.log(ref_answer.current.value)
+
+        if (ref_correct.current.value === "on")
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
 
 
     const get_question_type = () =>

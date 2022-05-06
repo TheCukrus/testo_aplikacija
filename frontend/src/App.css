@@ -1,0 +1,13 @@
+.add_question {
+    text-align: center;
+}
+
+.klausimo_tekstas {
+    width: 80%;
+    height: 10em;
+
+}
+
+.atsakymo_laukas {
+    width: 70%;
+}

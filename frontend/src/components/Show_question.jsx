@@ -1,28 +1,38 @@
 import React from "react";
 import axios from "axios";
 
-
 const Show_question = () =>
 {
-    const [question, set_question] = React.useState([])
+    const [questions, set_questions] = React.useState([])
 
     const get_all_questions = async () =>
     {
-        const result1 = await axios({
-            "method": "get",
-            "url": "/api/questions",
-        })
-        console.log(question)
-        set_question(result1.body);
+        try
+        {
+            const axios1 = await axios({
+                "method": "get",
+                "url": "/api/questions",
+                "data": {}
+            })
+
+            console.log(axios1)
+            set_questions(axios1.data);
+        }
+        catch (err)
+        {
+
+        }
     }
+
     return (
         <div>
-            <h1>klausimai</h1>
-            <p>{JSON.stringify(question)}</p>
-            <button onClick={get_all_questions}>visi klausimai</button>
+            <h1>get_all_questions</h1>
+
+            <p>{JSON.stringify(questions)}</p>
+
+            <button onClick={get_all_questions}>get_all_questions</button>
         </div>
     )
 }
 
-
-export default Show_question;
+export default Show_question

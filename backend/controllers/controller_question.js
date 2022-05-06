@@ -60,19 +60,24 @@ router_questions.post("/", async (req, res) =>
     }
 })
 
-
 router_questions.get("/", async (req, res) =>
 {
     try
     {
-        const result1 = await model_questions.find({})
+        const result = await model_questions.find()
+
+        if(result instanceof Array === false)
+        {
+            res.statusCode = 400;
+            res.end();    
+        }
 
         res.statusCode = 200;
-        res.end();
+        res.json(result);
     }
     catch (err)
     {
-        res.statusCode = 404;
+        res.statusCode = 400;
         res.end();
     }
 })

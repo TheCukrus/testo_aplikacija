@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import "./Add_question.css";
 
 const Add_question = () =>
 {
@@ -9,13 +8,14 @@ const Add_question = () =>
     const ref_question_type_single_answer = React.createRef();
     const ref_question_type_multiple_answer = React.createRef();
 
-    const ref_answer = React.createRef();
-    const ref_correct = React.createRef();
+    const ref_answer_1 = React.createRef();
+    const ref_answer_1_correct = React.createRef();
+
+    const ref_answer_2 = React.createRef();
+    const ref_answer_2_correct = React.createRef();
 
     const handle_button_click = async () =>
     {
-
-
         const axios1 = await axios({
             "method": "post",
             "url": "/api/questions",
@@ -25,27 +25,19 @@ const Add_question = () =>
                 "type": get_question_type(),
                 "answers": [
                     {
-                        "answer": ref_answer.current.value,
-                        "correct": get_correct_value()
-                    }]
+                        "answer": ref_answer_1.current.value,
+                        "correct": ref_answer_1_correct.current.checked
+                    },
+                    {
+                        "answer": ref_answer_2.current.value,
+                        "correct": ref_answer_2_correct.current.checked
+                    }
+                ]
             }
         })
+
+        console.log(axios1)
     }
-
-    const get_correct_value = () =>
-    {
-        console.log(ref_answer.current.value)
-
-        if (ref_correct.current.value === "on")
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-    }
-
 
     const get_question_type = () =>
     {
@@ -63,7 +55,6 @@ const Add_question = () =>
         }
     }
 
-
     return (
         <div className="add_question">
 
@@ -77,8 +68,13 @@ const Add_question = () =>
             <p>atsakymo variantai</p><br />
 
             <div>
-                <label >answer 1: <input className="atsakymo_laukas" ref={ref_answer} type="text" ></input></label>
-                <label> correct   <input ref={ref_correct} type="checkbox" ></input></label><br />
+                <label>1:<input className="atsakymo_laukas" ref={ref_answer_1} type="text" ></input></label>
+                <label>correct:<input ref={ref_answer_1_correct} type="checkbox" ></input></label><br />
+            </div>
+
+            <div>
+                <label>2:<input className="atsakymo_laukas" ref={ref_answer_2} type="text" ></input></label>
+                <label>correct:<input ref={ref_answer_2_correct} type="checkbox" ></input></label><br />
             </div>
 
             <button onClick={handle_button_click}>talpinti klausima</button>
@@ -88,4 +84,4 @@ const Add_question = () =>
     )
 }
 
-export default Add_question;
+export default Add_question

@@ -1,9 +1,8 @@
 import React from "react";
 import axios from "axios";
 
-const Question_edit = (props) =>
+const Window_edit_question = (props) =>
 {
-    console.log(props.question_edit_data);
     const ref_question_text_edit = React.createRef();
 
     const ref_question_type_single_answer_edit = React.createRef();
@@ -15,9 +14,7 @@ const Question_edit = (props) =>
     const ref_answer_2_edit = React.createRef();
     const ref_answer_2_correct_edit = React.createRef();
 
-
-    const [klausimo_laukas, set_klausimo_laukas] = React.useState(props.question_edit_data.text)
-
+    const [klausimo_tekstas, set_klausimo_tekstas] = React.useState(props.window_update_data.text)
 
     const get_question_type = () =>
     {
@@ -41,7 +38,7 @@ const Question_edit = (props) =>
         {
             const axios1 = await axios({
                 "method": "put",
-                "url": `/api/questions/${props.questions._id}`,
+                "url": `/api/questions/${props.window_update_data._id}`,
                 "data":
                 {
                     "text": ref_question_text_edit.current.value,
@@ -54,8 +51,7 @@ const Question_edit = (props) =>
                         {
                             "answer": ref_answer_2_edit.current.value,
                             "correct": ref_answer_2_correct_edit.current.checked
-                        }
-                    ]
+                        }]
                 }
             })
         }
@@ -63,21 +59,31 @@ const Question_edit = (props) =>
         {
             console.log(err);
         }
-
-
     }
 
 
     const close_window = () =>
     {
-        return props.set_question_edit_data(null)
+        return props.set_window_update_data(null)
+    }
+
+    const change_questions = () =>
+    {
+      const copy_of_window_update_data = { ...props.window_update_data }
+
+        copy_of_window_update_data.text = props.window_update_data.text;
+        copy_of_window_update_data.type = props.window_update_data.type;
+        copy_of_window_update_data.answers[0].answer = props.window_update_data.answers[0].answer;
+        copy_of_window_update_data.answers[0].answer = props.window_update_data.answers[0].correct;
+        copy_of_window_update_data.answers[1].answer = props.window_update_data.answers[1].answer;
+        copy_of_window_update_data.answers[1].answer = props.window_update_data.answers[1].correct;
     }
 
     return (
         <div className="add_question">
 
             <p>Klausimo tekstas</p><br />
-            <textarea className="klausimo_tekstas" value={set_klausimo_laukas} type="text" ref={ref_question_text_edit}></textarea><br />
+            <textarea className="klausimo_tekstas" type="text" onChange={change_questions} ref={ref_question_text_edit}></textarea><br />
 
             <p>klausimo tipas</p><br />
             <label><input type="radio" name="question_type" ref={ref_question_type_single_answer_edit}></input>One answer</label><br />
@@ -86,13 +92,13 @@ const Question_edit = (props) =>
             <p>atsakymo variantai</p><br />
 
             <div>
-                <label>1:<input className="atsakymo_laukas" ref={ref_answer_1_edit} type="text" ></input></label>
-                <label>correct:<input ref={ref_answer_1_correct_edit} type="checkbox" ></input></label><br />
+                <label>1:<input className="atsakymo_laukas" onChange={change_questions} ref={ref_answer_1_edit} type="text" ></input></label>
+                <label>correct:<input ref={ref_answer_1_correct_edit} type="checkbox" onChange={change_questions} ></input></label><br />
             </div>
 
             <div>
-                <label>2:<input className="atsakymo_laukas" ref={ref_answer_2_edit} type="text" ></input></label>
-                <label>correct:<input ref={ref_answer_2_correct_edit} type="checkbox" ></input></label><br />
+                <label>2:<input className="atsakymo_laukas" ref={ref_answer_2_edit} onChange={change_questions} type="text" ></input></label>
+                <label>correct:<input ref={ref_answer_2_correct_edit} type="checkbox" onChange={change_questions} ></input></label><br />
             </div>
 
             <button onClick={handle_button_click}>Redaduoti klausima</button>
@@ -103,4 +109,4 @@ const Question_edit = (props) =>
     )
 }
 
-export default Question_edit;
+export default Window_edit_question;

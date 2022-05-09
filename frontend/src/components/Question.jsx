@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import Question_edit from "./Question_edit";
 
 const Question = (props) =>
 {
@@ -25,7 +24,7 @@ const Question = (props) =>
 
     const update_question = () =>
     {
-        props.set_question_edit_data(props.question)
+        props.set_window_update_data(props.question)
     }
 
 
@@ -36,7 +35,6 @@ const Question = (props) =>
             <p>Klausimas: {props.question.text}</p>
             <p> Galimi variantai: {props.question.answers[0].answer}</p>
             <button onClick={remove_question}>Trinti klausima</button>
-            {/* <button onClick={update_question}>Redaguoti klausima</button> */}
             <button onClick={update_question}>Redaguoti klausima</button>
 
 

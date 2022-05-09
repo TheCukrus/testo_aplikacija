@@ -122,14 +122,11 @@ router_questions.put("/:id", async (req, res) =>
 
     try
     {
-        const result1 = await model_questions.updateOne({ "id": req.params._id },
+        const result1 = await model_questions.findByIdAndUpdate(req.params.id,
             {
-                "$push":
-                {
-                    "text": req.body.text,
-                    "type": req.body.type,
-                    "answers": req.body.answers
-                }
+                "text": req.body.text,
+                "type": req.body.type,
+                "answers": req.body.answers
             })
 
         res.statusCode = 200;

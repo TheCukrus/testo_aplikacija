@@ -28,7 +28,7 @@ const Show_question = (props) =>
         <div>
             <h1>get_all_questions</h1>
 
-            {props.questions.map((ele, i) => { return <Question set_question_edit_data={props.set_question_edit_data} key={i} question={ele} get_all_questions={get_all_questions} /> })}
+            {props.questions.map((ele, i) => { return <Question set_window_update_data={props.set_window_update_data} key={i} question={ele} get_all_questions={get_all_questions} /> })}
 
             <button onClick={get_all_questions}>get_all_questions</button>
         </div>

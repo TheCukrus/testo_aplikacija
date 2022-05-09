@@ -11,3 +11,7 @@
 .atsakymo_laukas {
     width: 70%;
 }
+
+.question {
+    border: 1px solid black;
+}

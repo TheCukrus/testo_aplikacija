@@ -16,27 +16,34 @@ const Add_question = () =>
 
     const handle_button_click = async () =>
     {
-        const axios1 = await axios({
-            "method": "post",
-            "url": "/api/questions",
-            "data":
-            {
-                "text": ref_question_text.current.value,
-                "type": get_question_type(),
-                "answers": [
-                    {
-                        "answer": ref_answer_1.current.value,
-                        "correct": ref_answer_1_correct.current.checked
-                    },
-                    {
-                        "answer": ref_answer_2.current.value,
-                        "correct": ref_answer_2_correct.current.checked
-                    }
-                ]
-            }
-        })
+        try
+        {
+            const axios1 = await axios({
+                "method": "post",
+                "url": "/api/questions",
+                "data":
+                {
+                    "text": ref_question_text.current.value,
+                    "type": get_question_type(),
+                    "answers": [
+                        {
+                            "answer": ref_answer_1.current.value,
+                            "correct": ref_answer_1_correct.current.checked
+                        },
+                        {
+                            "answer": ref_answer_2.current.value,
+                            "correct": ref_answer_2_correct.current.checked
+                        }
+                    ]
+                }
+            })
 
-        console.log(axios1)
+        }
+        catch (err)
+        {
+            console.log(err)
+        }
+
     }
 
     const get_question_type = () =>

@@ -1,10 +1,9 @@
 import React from "react";
 import axios from "axios";
+import Question from "./Question.jsx";
 
-const Show_question = () =>
+const Show_question = (props) =>
 {
-    const [questions, set_questions] = React.useState([])
-
     const get_all_questions = async () =>
     {
         try
@@ -15,8 +14,8 @@ const Show_question = () =>
                 "data": {}
             })
 
-            console.log(axios1)
-            set_questions(axios1.data);
+            // console.log("cia axios", axios1)
+            props.set_questions(axios1.data);
         }
         catch (err)
         {
@@ -24,11 +23,12 @@ const Show_question = () =>
         }
     }
 
+    console.log("cia questions", props.questions)
     return (
         <div>
             <h1>get_all_questions</h1>
 
-            <p>{JSON.stringify(questions)}</p>
+            {props.questions.map((ele, i) => { return <Question set_question_edit_data={props.set_question_edit_data} key={i} question={ele} get_all_questions={get_all_questions} /> })}
 
             <button onClick={get_all_questions}>get_all_questions</button>
         </div>

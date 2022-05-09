@@ -66,14 +66,74 @@ router_questions.get("/", async (req, res) =>
     {
         const result = await model_questions.find()
 
-        if(result instanceof Array === false)
+        if (result instanceof Array === false)
         {
             res.statusCode = 400;
-            res.end();    
+            res.end();
         }
 
         res.statusCode = 200;
         res.json(result);
+    }
+    catch (err)
+    {
+        res.statusCode = 400;
+        res.end();
+    }
+})
+
+router_questions.delete("/:id", async (req, res) =>
+{
+    if (req.params.id === undefined)
+    {
+        res.statusCode = 400;
+        res.end();
+        return
+    }
+
+    try
+    {
+        const result1 = await model_questions.findByIdAndDelete(req.params.id);
+        res.statusCode = 200;
+        res.end();
+    }
+    catch (err)
+    {
+        res.statusCode = 400;
+        res.end();
+    }
+})
+
+router_questions.put("/:id", async (req, res) =>
+{
+    if (req.params.id === undefined)
+    {
+        res.statusCode = 400;
+        res.end();
+        return;
+    }
+
+    if (req.body.text === undefined)
+    {
+        res.statusCode = 400;
+        res.end();
+        return;
+    }
+
+    try
+    {
+        const result1 = await model_questions.updateOne({ "id": req.params._id },
+            {
+                "$push":
+                {
+                    "text": req.body.text,
+                    "type": req.body.type,
+                    "answers": req.body.answers
+                }
+            })
+
+        res.statusCode = 200;
+        res.end();
     }
     catch (err)
     {

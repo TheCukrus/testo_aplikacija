@@ -5,41 +5,42 @@ const Question = (props) =>
 {
     const remove_question = async () =>
     {
-        const confirm_box = window.confirm(`Trinti ${props.question.text}?`)
-        if (confirm_box === false) return
+        if (window.confirm(`Trinti ${props.question.text}?`) === false) return
 
         try
         {
-            const axios1 = await axios({
-                "method": "delete",
-                "url": `/api/questions/${props.question._id}`
-            })
-            props.get_all_questions()
+            const axios1 = await axios(
+                {
+                    "method": "delete",
+                    "url": `/api/questions/${props.question._id}`
+                })
+
+            alert("ok")
         }
         catch (err)
         {
-            console.log(err);
+            alert("error")
         }
     }
 
-    const update_question = () =>
+    const edit_question = () =>
     {
-        props.set_window_update_data(props.question)
+        props.set_data_Window_edit_question(props.question)
     }
-
-
-
 
     return (
         <div className="question">
-            <p>Klausimas: {props.question.text}</p>
-            <p> Galimi variantai: {props.question.answers[0].answer}</p>
-            <button onClick={remove_question}>Trinti klausima</button>
-            <button onClick={update_question}>Redaguoti klausima</button>
 
+            <p>Klausimas: {props.question.text}</p>
+
+            <p>Galimi variantai: {props.question.answers[0].answer}</p>
+
+            <button onClick={remove_question}>Trinti klausima</button>
+
+            <button onClick={edit_question}>Redaguoti klausima</button>
 
         </div >
     )
 }
 
-export default Question;
+export default Question

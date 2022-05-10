@@ -1,12 +1,9 @@
 import React from "react";
 import axios from "axios";
 
-const Add_question = () =>
+const Add_question = (props) =>
 {
     const ref_question_text = React.createRef();
-
-    const ref_question_type_single_answer = React.createRef();
-    const ref_question_type_multiple_answer = React.createRef();
 
     const ref_answer_1 = React.createRef();
     const ref_answer_1_correct = React.createRef();
@@ -24,7 +21,7 @@ const Add_question = () =>
                 "data":
                 {
                     "text": ref_question_text.current.value,
-                    "type": get_question_type(),
+                    "type": props.get_question_type(),
                     "answers": [
                         {
                             "answer": ref_answer_1.current.value,
@@ -37,7 +34,7 @@ const Add_question = () =>
                     ]
                 }
             })
-
+            props.get_all_questions()
         }
         catch (err)
         {
@@ -46,21 +43,8 @@ const Add_question = () =>
 
     }
 
-    const get_question_type = () =>
-    {
-        if (ref_question_type_single_answer.current.checked)
-        {
-            return "select_one";
-        }
-        else if (ref_question_type_multiple_answer.current.checked)
-        {
-            return "select_multiple"
-        }
-        else
-        {
-            return undefined;
-        }
-    }
+
+
 
     return (
         <div className="add_question">
@@ -69,8 +53,8 @@ const Add_question = () =>
             <textarea className="klausimo_tekstas" type="text" ref={ref_question_text}></textarea><br />
 
             <p>klausimo tipas</p><br />
-            <label><input type="radio" name="question_type" ref={ref_question_type_single_answer}></input>One answer</label><br />
-            <label><input type="radio" name="question_type" ref={ref_question_type_multiple_answer}></input>Multiple answers</label><br />
+            <label><input type="radio" name="question_type" ref={props.ref_question_type_single_answer}></input>One answer</label><br />
+            <label><input type="radio" name="question_type" ref={props.ref_question_type_multiple_answer}></input>Multiple answers</label><br />
 
             <p>atsakymo variantai</p><br />
 

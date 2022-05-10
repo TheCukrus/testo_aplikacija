@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-const Window_edit_questions = (props) =>
+const Window_create_question = (props) =>
 {
     const ref_question_text = React.createRef();
 
@@ -14,68 +14,25 @@ const Window_edit_questions = (props) =>
     const ref_answer_2 = React.createRef();
     const ref_answer_2_correct = React.createRef();
 
-    const change_handler = () =>
-    {
-        const copy_of_data = { ...props.data }
-
-        copy_of_data.text = ref_question_text.current.value
-
-        if (ref_question_type_single_answer.current.checked)
-        {
-            copy_of_data.type = "select_one"
-        }
-        else
-        {
-            copy_of_data.type = "select_multiple"
-        }
-
-        copy_of_data.answers[0].answer = ref_answer_1.current.value
-        copy_of_data.answers[0].correct = ref_answer_1_correct.current.checked
-
-        copy_of_data.answers[1].answer = ref_answer_2.current.value
-        copy_of_data.answers[1].correct = ref_answer_2_correct.current.checked
-
-        props.set_data(copy_of_data)
-    }
-
-    const send_delete_request = async () =>
+    const send_request = async () =>
     {
         try
         {
             const axios1 = await axios({
-                "method": "delete",
-                "url": `/api/questions/${props.data._id}`
-            })
-            alert("ok");
-            props.get_all_questions()
-            close_window();
-        }
-        catch (err)
-        {
-            alert("error");
-            console.log(err)
-        }
-    }
-
-    const send_edit_request = async () =>
-    {
-        try
-        {
-            const axios1 = await axios({
-                "method": "put",
-                "url": `/api/questions/${props.data._id}`,
+                "method": "post",
+                "url": "/api/questions",
                 "data":
                 {
-                    "text": props.data.text,
-                    "type": props.data.type,
+                    "text": ref_question_text.current.value,
+                    "type": question_type(),
                     "answers": [
                         {
-                            "answer": props.data.answers[0].answer,
-                            "correct": props.data.answers[0].correct,
+                            "answer": ref_answer_1.current.value,
+                            "correct": ref_answer_1_correct.current.checked,
                         },
                         {
-                            "answer": props.data.answers[1].answer,
-                            "correct": props.data.answers[1].correct,
+                            "answer": ref_answer_2.current.value,
+                            "correct": ref_answer_2_correct.current.checked,
                         }
                     ]
                 }
@@ -90,6 +47,17 @@ const Window_edit_questions = (props) =>
         }
     }
 
+    const question_type = () =>
+    {
+        if (ref_question_type_single_answer.current.checked === true)
+        {
+            return "select_one";
+        }
+        else if (ref_question_type_multiple_answer.current.checked === true)
+        {
+            return "select_multiple";
+        }
+    }
 
     const close_window = () =>
     {
@@ -104,8 +72,6 @@ const Window_edit_questions = (props) =>
             <textarea
                 className="klausimo_tekstas"
                 ref={ref_question_text}
-                value={props.data.text}
-                onChange={change_handler}
             />
 
             <br />
@@ -116,9 +82,7 @@ const Window_edit_questions = (props) =>
                 <input
                     type="radio"
                     name="question_type"
-                    checked={props.data.type === "select_one"}
                     ref={ref_question_type_single_answer}
-                    onChange={change_handler}
                 />
                 One answer
             </label>
@@ -129,9 +93,7 @@ const Window_edit_questions = (props) =>
                 <input
                     type="radio"
                     name="question_type"
-                    checked={props.data.type === "select_multiple"}
                     ref={ref_question_type_multiple_answer}
-                    onChange={change_handler}
                 />
                 Multiple answers
             </label>
@@ -146,9 +108,7 @@ const Window_edit_questions = (props) =>
                     <input
                         className="atsakymo_laukas"
                         ref={ref_answer_1}
-                        value={props.data.answers[0].answer}
                         type="text"
-                        onChange={change_handler}
                     />
                 </label>
 
@@ -157,8 +117,6 @@ const Window_edit_questions = (props) =>
                     <input
                         ref={ref_answer_1_correct}
                         type="checkbox"
-                        checked={props.data.answers[0].correct}
-                        onChange={change_handler}
                     />
                 </label><br />
             </div>
@@ -169,9 +127,7 @@ const Window_edit_questions = (props) =>
                     <input
                         className="atsakymo_laukas"
                         ref={ref_answer_2}
-                        value={props.data.answers[1].answer}
                         type="text"
-                        onChange={change_handler}
                     />
                 </label>
 
@@ -180,8 +136,6 @@ const Window_edit_questions = (props) =>
                     <input
                         ref={ref_answer_2_correct}
                         type="checkbox"
-                        checked={props.data.answers[1].correct}
-                        onChange={change_handler}
                     />
                 </label>
 
@@ -189,10 +143,9 @@ const Window_edit_questions = (props) =>
 
             </div>
             <button onClick={close_window}>Close</button>
-            <button onClick={send_edit_request}>Update</button>
-            <button onClick={send_delete_request}>Delete</button>
+            <button onClick={send_request}>Create</button>
         </div >
     )
 }
 
-export default Window_edit_questions;
+export default Window_create_question;

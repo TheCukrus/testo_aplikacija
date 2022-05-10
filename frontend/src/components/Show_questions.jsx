@@ -14,24 +14,35 @@ const Show_question = (props) =>
                 "data": {}
             })
 
-            // console.log("cia axios", axios1)
             props.set_questions(axios1.data);
+
+            alert("ok")
         }
         catch (err)
         {
-
+            alert("err")
         }
     }
 
-    console.log("cia questions", props.questions)
     return (
         <div>
+
             <h1>get_all_questions</h1>
 
-            {props.questions.map((ele, i) => { return <Question set_window_update_data={props.set_window_update_data} key={i} question={ele} get_all_questions={get_all_questions} /> })}
+            {
+                props.questions.map((ele, i) =>
+                {
+                    return <Question
+                        key={i}
+                        question={ele}
+                        data_Window_edit_question={props.data_Window_edit_question}
+                        set_data_Window_edit_question={props.set_data_Window_edit_question} />
+                })
+            }
 
             <button onClick={get_all_questions}>get_all_questions</button>
-        </div>
+
+        </div >
     )
 }
 

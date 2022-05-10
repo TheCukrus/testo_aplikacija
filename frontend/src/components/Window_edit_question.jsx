@@ -43,8 +43,13 @@ const Window_edit_question = (props) =>
 
     }
 
+    const close_window_update = () =>
+    {
+        return props.set_data_Window_edit_question(null);
+    }
+
     return (
-        <div className="add_question">
+        <div className="window_edit_question">
 
             <p>Klausimo tekstas</p><br />
 
@@ -135,7 +140,7 @@ const Window_edit_question = (props) =>
                 <br />
 
             </div>
-
+            <button onClick={close_window_update}>Uždaryti langa</button>
         </div >
     )
 }

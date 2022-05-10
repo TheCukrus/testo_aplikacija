@@ -15,3 +15,12 @@
 .question {
     border: 1px solid black;
 }
+
+.window_edit_question {
+    width: 80%;
+    border: 1px solid black;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

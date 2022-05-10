@@ -46,7 +46,11 @@ const Window_edit_questions = (props) =>
                 "method": "delete",
                 "url": `/api/questions/${props.data._id}`
             })
-            alert("ok");
+            window.confirm("ok");
+            if (window.confirm === false)
+            {
+                return;
+            }
             props.get_all_questions()
             close_window();
         }

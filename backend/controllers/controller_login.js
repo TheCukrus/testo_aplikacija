@@ -42,6 +42,7 @@ router_login.get("/", async (req, res) =>
     {
         res.statusCode = 400;
         res.end();
+        return;
     }
 
     try
@@ -50,8 +51,9 @@ router_login.get("/", async (req, res) =>
 
         if (result1 === null)
         {
-            res.statusCode = 400;
+            res.statusCode = 404;
             res.end();
+            return;
         }
 
         res.statusCode = 200;
@@ -59,10 +61,34 @@ router_login.get("/", async (req, res) =>
     }
     catch (err)
     {
-
+        res.statusCode = 400;
+        res.end();
     }
 })
 
+
+router_login.delete("/", async (req, res) =>
+{
+    try
+    {
+        const result1 = await model_user.updateOne({ "token": req.cookies.token }, { "token": null });
+
+        if (result1 === null)
+        {
+            res.statusCode = 400;
+            res.end();
+            return;
+        }
+
+        res.statusCode = 200;
+        res.end();
+    }
+    catch (err)
+    {
+        res.statusCode = 400;
+        res.end();
+    }
+})
 
 
 module.exports = router_login;

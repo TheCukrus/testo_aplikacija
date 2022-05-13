@@ -1,10 +1,15 @@
 import React from "react";
 import axios from "axios";
 
-const Window_login = () =>
+const Window_login = (props) =>
 {
     const ref_user_name = React.createRef();
     const ref_password = React.createRef();
+
+
+    const user_name = props.user_name;
+    const set_user_name = props.set_user_name;
+
 
     const send_login_request = async () =>
     {
@@ -20,6 +25,7 @@ const Window_login = () =>
                 }
             })
             alert("ok");
+            props.send_request_get_user_name_and_update_state()
         }
         catch (err)
         {

@@ -10,6 +10,9 @@ import Window_nav_bar from './components/Window_nav_bar';
 
 function App()
 {
+  const [user_name, set_user_name] = React.useState(null);
+
+
   const [questions, set_questions] = React.useState([])
 
   const [data_Window_edit_question, set_data_Window_edit_question] = React.useState(null);
@@ -37,6 +40,27 @@ function App()
     }
   }
 
+  const send_request_get_user_name_and_update_state = async () =>
+  {
+    try
+    {
+      const axios1 = await axios({
+        "method": "get",
+        "url": "/api/login",
+      })
+
+      if (axios1.data.user_name !== undefined)
+      {
+        set_user_name(axios1.data.user_name);
+      }
+    }
+    catch (err)
+    {
+      set_user_name(null)
+    }
+  }
+
+
   return (
     <div className="App">
 
@@ -49,11 +73,17 @@ function App()
         data_Window_login={data_Window_login}
         data_Window_create_question={data_Window_create_question}
         data_window_list_questions={data_window_list_questions}
+        user_name={user_name}
+        set_user_name={set_user_name}
+        send_request_get_user_name={send_request_get_user_name_and_update_state}
       />
 
       {data_Window_login === null ? null : <Window_login
         data={data_Window_login}
         set_data={set_data_Window_login}
+        user_name={user_name}
+        set_user_name={set_user_name}
+        send_request_get_user_name_and_update_state={send_request_get_user_name_and_update_state}
       />}
 
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const model_questions = require("../models/model_questions.js");
+const model_user = require("../models/model_user.js");
 
 const router_questions = express.Router()
 
@@ -35,6 +36,16 @@ router_questions.post("/", async (req, res) =>
 
     try
     {
+        const result0 = await model_user.findOne({ "token": req.cookies.token })
+
+        if (result0 === null)
+        {
+            res.statusCode = 400;
+            res.end();
+            return;
+        }
+
+
         const result1 = await model_questions.create(
             {
                 "text": req.body.text,
@@ -122,6 +133,17 @@ router_questions.put("/:id", async (req, res) =>
 
     try
     {
+
+        const result0 = await model_user.findOne({ "token": req.cookies.token })
+
+        if (result0 === null)
+        {
+            res.statusCode = 400;
+            res.end();
+            return;
+        }
+
+
         const result1 = await model_questions.findByIdAndUpdate(req.params.id,
             {
                 "text": req.body.text,
